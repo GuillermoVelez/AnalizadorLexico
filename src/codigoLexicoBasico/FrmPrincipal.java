@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import java_cup.runtime.Symbol;
 
 public class FrmPrincipal extends javax.swing.JFrame {
 
@@ -112,29 +113,117 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
 
         try {
+            int cont =1;
             Reader lector;
             lector = new BufferedReader(new FileReader("Temporal.txt")); 
             LexicoBasico lexicobasico = new LexicoBasico(lector);
-            String resultado = "";
+            //Preguntar: LexicoBasicoCup lexicobasicocup = new LexicoBasicoCup(lector);//
+            String resultado = "LINEA " + cont + "\t\tSIMBOLO\n";
+            
             while (true) {
                 Tokens tokens = lexicobasico.yylex();
+                
                 if (tokens == null) {
                     resultado += "FIN";
                     txtResultado.setText(resultado);
                     return;
                 }
+                
                 switch (tokens) {
-                    case ERROR:
-                        resultado += "Simbolo no definido\n";
-                        break;
-                    case Identificador:
-                    case Numero:
-                    case Reservadas:
-                        resultado += lexicobasico.lexemas + ": Es " + tokens + "\n";
-                        break;
-                    default:
-                        resultado += "Token: " + tokens + "\n";
-                        break;
+                    case Linea:
+                    cont++;
+                    resultado += "LINEA " + cont + "\n";
+                    break;
+                case Comillas:
+                    resultado += "  <Comillas>\t\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Cadena:
+                    resultado += "  <Tipo de dato>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case T_dato:
+                    resultado += "  <Tipo de dato>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case If:
+                    resultado += "  <Reservada if>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Else:
+                    resultado += "  <Reservada else>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Do:
+                    resultado += "  <Reservada do>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case While:
+                    resultado += "  <Reservada while>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case For:
+                    resultado += "  <Reservada while>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Igual:
+                    resultado += "  <Operador igual>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Suma:
+                    resultado += "  <Operador suma>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Resta:
+                    resultado += "  <Operador resta>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Multiplicacion:
+                    resultado += "  <Operador multiplicacion>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Division:
+                    resultado += "  <Operador division>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Op_logico:
+                    resultado += "  <Operador logico>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Op_incremento:
+                    resultado += "  <Operador incremento>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Op_relacional:
+                    resultado += "  <Operador relacional>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Op_atribucion:
+                    resultado += "  <Operador atribucion>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Op_booleano:
+                    resultado += "  <Operador booleano>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Parentesis_a:
+                    resultado += "  <Parentesis de apertura>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Parentesis_c:
+                    resultado += "  <Parentesis de cierre>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Llave_a:
+                    resultado += "  <Llave de apertura>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Llave_c:
+                    resultado += "  <Llave de cierre>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Corchete_a:
+                    resultado += "  <Corchete de apertura>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Corchete_c:
+                    resultado += "  <Corchete de cierre>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Main:
+                    resultado += "  <Reservada main>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case P_coma:
+                    resultado += "  <Punto y coma>\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Identificador:
+                    resultado += "  <Identificador>\t\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case Numero:
+                    resultado += "  <Numero>\t\t" + lexicobasico.lexemas + "\n";
+                    break;
+                case ERROR:
+                    resultado += "  <Simbolo no definido>\n";
+                    break;
+                default:
+                    resultado += "  < " + lexicobasico.lexemas + " >\n";
+                    break;
                 }
             }
         } catch (FileNotFoundException ex) {
