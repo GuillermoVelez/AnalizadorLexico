@@ -10,5 +10,6 @@ int main(int argc, char** argv) {
 	insertar.insercion(5);
 	insertar.insercion(519);
 	insertar.insercion(412);
+	insertar.insercion(421);
 	return 0;
 }
